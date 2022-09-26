@@ -1,23 +1,24 @@
+//if in auth.html
 if (window.location.pathname === '/auth.html') {
   // Check if wallet is linked
   if (isLoggedIn()) {
     window.location.href = '/index.html';
   } else {
-    // Access login button DOM element
+    // Remains within auth.html and then access login button DOM element
     const loginBtn = document.querySelector('#login-btn');
     loginBtn.onclick = (event) => {
       login();
     };
   }
-} else if (
-  window.location.pathname === '/new.html'
-) {
+
+  // if in new.html
+} else if (window.location.pathname === '/new.html') {
   // Check if logged in
   if (!isLoggedIn()) {
     window.location.href = '/auth.html';
   }
 
-  const newReordForm = document.querySelector('#new-record');
+  const newRecordForm = document.querySelector('#new-record');
   // Adds submitted task
   newRecordForm.onsubmit = async (event) => {
     event.preventDefault();
@@ -45,6 +46,7 @@ if (window.location.pathname === '/auth.html') {
     newRecordForm.reset();
   };
 
+  //if in index.html or /
 } else if (
   window.location.pathname === '/index.html' ||
   window.location.pathname === '/'
@@ -54,6 +56,7 @@ if (window.location.pathname === '/auth.html') {
   }
   document.querySelector('#wallet-id').textContent = getAccount();
 
+  //instantiating logout btn
   const logoutBtn = document.querySelector('#logout');
 
   /**
@@ -75,10 +78,10 @@ if (window.location.pathname === '/auth.html') {
 
 async function displayRecords() {
   // Retreive some records from records
-  const records = await readRecords(0, 50);
+  const records = await readRecords(0, 10);
   let retrievedRecords = '';
 
-  // Loop through the list of tasks if any and wrap them in relevant HTML elemnts
+  // Loop through the list of records if any and wrap them in relevant HTML elemnts
   for (let i = 0; i < records.length; i++) {
     const record = records[i];
     retrievedRecords += recordElement(i, record);
@@ -94,7 +97,7 @@ function recordElement(id, {diagnosis, hospital_name, medicine_administered, dat
                       <th>
                         <img
                           src="../images/hosBlock.png"
-                          alt="Toyota"
+                          alt="Hospital Record"
                           style="width: 45px; height: auto"
                         />
                         <span class="ms-2">${diagnosis}</span>
@@ -118,9 +121,8 @@ function recordElement(id, {diagnosis, hospital_name, medicine_administered, dat
                         <span>$${price}</span>
                       </td>
                       <td class="align-middle">
-                        <a href="#!" onclick="deleteCar(${id})" data-mdb-toggle="tooltip" title="Remove"
-                          ><i class="fa fa-trash fa-lg text-danger"></i
-                        ></a>
+                        <a onclick="removeRecord(${id});" href="/index.html"  data-mdb-toggle="tooltip" title="Remove"
+                          ><i class="fa fa-trash fa-lg text-danger"></i></a>
                       </td>
                     </tr>`;
 }

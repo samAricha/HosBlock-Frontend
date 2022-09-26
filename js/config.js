@@ -1,5 +1,5 @@
 const CONTRACT_NAME = 'test.aricha.testnet'; // Account id where the HospBlock smart contract is deployed
-const APP_NAME = 'HospBlock';
+const APP_NAME = 'HosBlock';
 
 function getConfig(env) {
   switch (env) {

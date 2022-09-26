@@ -97,6 +97,7 @@ const addRecord = async (diagnosis, hospital_name, medicine_administered, date_o
 };
 
 const readRecords = async (start, limit) => {
+  //double checking if user is loged in to view records
   if (isLoggedIn()) {
     const response = await window.contract.read_record({ start, limit });
     return response;
